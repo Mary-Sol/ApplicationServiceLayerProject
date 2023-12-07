@@ -55,7 +55,7 @@ namespace ApplicationServiceLayer.ApplicationService.Services
                 var selectpersonDto = new SelectPersonDtos();
                 id = selectperson.Id,
                 FirstName = selectperson.FirstName,
-                LastName = selectperson.LastName,
+                LastName = selectperson.LastName
                     }
             return selectpersonDto;
         }
@@ -69,7 +69,7 @@ namespace ApplicationServiceLayer.ApplicationService.Services
                 var personDto = new SelectPersonDtos();
                 id = person.Id,
                 FirstName = person.FirstName,
-                LastName = person.LastName,
+                LastName = person.LastName
             };
             persDto.Add(personDto);
         }
