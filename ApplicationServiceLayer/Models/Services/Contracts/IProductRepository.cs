@@ -5,4 +5,5 @@ namespace ApplicationServiceLayer.Models.Services.Contracts;
 
 public interface IProductRepository : IRepository<Product>
 {
+    Task<Product> GetByProductcodeAsync(string ProductCode);
 }
