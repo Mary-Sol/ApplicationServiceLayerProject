@@ -5,4 +5,5 @@ namespace ApplicationServiceLayer.Models.Services.Contracts;
 
 public interface IPersonRepository : IRepository<Person>
 {
+    Task Insert(Person createPerson);
 }

@@ -7,5 +7,6 @@ public interface IRepository <T> where T : class
     Task Delete(T obj);
     Task Delete(Guid Id);
     Task Update(T obj);
+    Task Insert(T obj);
     Task Save();
 }

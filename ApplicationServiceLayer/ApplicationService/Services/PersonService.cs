@@ -1,5 +1,6 @@
 ﻿using ApplicationServiceLayer.ApplicationService.Contracts;
 using ApplicationServiceLayer.ApplicationService.Dtos.PersonDtos;
+using ApplicationServiceLayer.Models.DomainModels.PersonAggregates;
 using ApplicationServiceLayer.Models.Services.Contracts;
 
 namespace ApplicationServiceLayer.ApplicationService.Services
@@ -28,18 +29,21 @@ namespace ApplicationServiceLayer.ApplicationService.Services
             }
         }
 
-        public async Task InsertAsync(CreatePersonDtos createPersonDtos)
+        public async Task<Person> InsertAsync(CreatePersonDtos createPersonDtos)
         {
-            if (createPersonDtos is null) return false;
+            if (createPersonDtos is not null)
+            { 
             var createPerson = new Person()
             {
                 Id = new Guid(),
                 FirstName = createPersonDtos.FirstName,
                 LastName = createPersonDtos.LastName,
             };
-            var result = await _personRepository.Insert(createPerson);
-            return result;
 
+                //return
+                var Result = await _personRepository.Insert(createPerson);
+                return Result;
+            }
         }
 
         public async Task SaveAsync()

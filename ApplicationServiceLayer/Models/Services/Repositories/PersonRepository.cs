@@ -77,6 +77,14 @@ public class PersonRepository : IPersonRepository
             throw;
         }
     }
+    public async Task Insert( Person person)
+    {
+        try
+        {
+            return await _dbContext.Person.CreateDbCommand()
+        }
+
+    }
 
     public async Task Update(Person person)
     {
