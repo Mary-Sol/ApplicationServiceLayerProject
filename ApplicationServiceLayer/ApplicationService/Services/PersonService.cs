@@ -14,8 +14,8 @@ namespace ApplicationServiceLayer.ApplicationService.Services
 
         public async Task DeleteByIdAsync(Guid Id)
         {
-            var result = await _personRepository.Delete(Id);
-            return result;
+             await _personRepository.Delete(Id);
+           
         }
 
         public async Task DeleteAsync(DeletePersonDtos deletePerson)
@@ -23,8 +23,8 @@ namespace ApplicationServiceLayer.ApplicationService.Services
             var DeletedPerson = await _personRepository.SelectById(deletePerson.Id);
             if (DeletedPerson != null) {
 
-                var result = await _personRepository.Delete(DeletedPerson);
-                return result;
+                 await _personRepository.Delete(DeletedPerson);
+                
             }
         }
 
