@@ -7,13 +7,14 @@ namespace ApplicationServiceLayer.ApplicationService.Services
     public class PersonService : IPersonService
     {
         private readonly IPersonRepository _personRepository;
+
         public PersonService(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
-        public async Task<IEnumerable<SelectPersonDtos>> SelectAll()
+        async Task<IEnumerable<SelectPersonDtos>> SelectAll()
         {
-            List<SelectPersonDtos> Employdto = new List<SelectPersonDtos>();
+            List<SelectPersonDtos> employdto = new List<SelectPersonDtos>();
             var Employes = await _personRepository.SelectAll();
             foreach (var person in Employes)
             {
@@ -23,14 +24,14 @@ namespace ApplicationServiceLayer.ApplicationService.Services
                     FirstName = person.FirstName,
                     LastName = person.LastName
                 };
-                persondto.Add(personDto);
+                employdto.Add(personDto);
             }
            
         }
 
-        public async Task<SelectPersonDtos> Select(Guid Id)
+        public async Task<SelectPersonDtos> Select(Guid id)
         {
-            var selectperson = await _personRepository.SelectById(Id);
+            var selectperson = await _personRepository.SelectById(id);
             if (selectperson != null)
             {
                 var selectpersonDto = new SelectPersonDtos()

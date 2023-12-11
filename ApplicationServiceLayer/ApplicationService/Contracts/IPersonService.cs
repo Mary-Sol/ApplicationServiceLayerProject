@@ -6,5 +6,5 @@ namespace ApplicationServiceLayer.ApplicationService.Contracts;
 
 public interface IPersonService : IService<Person, CreatePersonDtos, DeletePersonDtos, UpdatePersonDtos, SelectPersonDtos>
 {
-    
+    Task<SelectPersonDtos> Select(Guid Id);
 }
