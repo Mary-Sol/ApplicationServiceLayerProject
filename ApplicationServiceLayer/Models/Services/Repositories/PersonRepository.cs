@@ -1,5 +1,7 @@
 ﻿using ApplicationServiceLayer.Models.DomainModels.PersonAggregates;
 using ApplicationServiceLayer.Models.Services.Contracts;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationServiceLayer.Models.Services.Reporitories;
@@ -65,9 +67,22 @@ public class PersonRepository : IPersonRepository
             throw;
         }
     }
+    public async Task Insert(Person person)
+    {
+        try
+        {
+            _dbContext.Add(person);
+            await _dbContext.SaveChangesAsync();
 
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
     public async Task<Person> SelectById(Guid id)
     {
+        
         try
         {
             return await _dbContext.Person.FindAsync(id);
@@ -77,15 +92,7 @@ public class PersonRepository : IPersonRepository
             throw;
         }
     }
-    public async Task Insert( Person person)
-    {
-        try
-        {
-            return await _dbContext.Person.CreateDbCommand()
-        }
-
-    }
-
+   
     public async Task Update(Person person)
     {
         try

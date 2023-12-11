@@ -93,7 +93,17 @@ public class ProductRepository : IProductRepository
             throw;
         }
     }
-
+    public async Task Insert(Product product)
+    {
+        try
+        {
+            await _dbContext.AddAsync(product);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
     public async Task Update(Product product)
     {
 

@@ -1,4 +1,6 @@
-﻿namespace ApplicationServiceLayer.ApplicationService.Contracts.ServiceFrameworks
+﻿using ApplicationServiceLayer.ApplicationService.Dtos.PersonDtos;
+
+namespace ApplicationServiceLayer.ApplicationService.Contracts.ServiceFrameworks
 {
     public interface IService <T,TCreate,TDelete, TRead, TUpdate>
     {
@@ -11,5 +13,6 @@
         Task Delete(Guid Id);
         Task Delete(TDelete obj);
         Task Save();
+        
     }
 }

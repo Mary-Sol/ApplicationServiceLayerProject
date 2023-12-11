@@ -2,7 +2,6 @@
 using ApplicationServiceLayer.ApplicationService.Dtos.PersonDtos;
 using ApplicationServiceLayer.Models.DomainModels.PersonAggregates;
 using ApplicationServiceLayer.Models.Services.Contracts;
-
 namespace ApplicationServiceLayer.ApplicationService.Services
 {
     public class PersonService : IPersonService
@@ -12,87 +11,88 @@ namespace ApplicationServiceLayer.ApplicationService.Services
         {
             _personRepository = personRepository;
         }
-
-        public async Task DeleteByIdAsync(Guid Id)
+        public async Task<IEnumerable<SelectPersonDtos>> SelectAll()
         {
-             await _personRepository.Delete(Id);
+            List<SelectPersonDtos> Employdto = new List<SelectPersonDtos>();
+            var Employes = await _personRepository.SelectAll();
+            foreach (var person in Employes)
+            {
+                var personDto = new SelectPersonDtos()
+                {
+                    Id = person.Id,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName
+                };
+                persondto.Add(personDto);
+            }
            
         }
 
-        public async Task DeleteAsync(DeletePersonDtos deletePerson)
+        public async Task<SelectPersonDtos> Select(Guid Id)
         {
-            var DeletedPerson = await _personRepository.SelectById(deletePerson.Id);
-            if (DeletedPerson != null) {
+            var selectperson = await _personRepository.SelectById(Id);
+            if (selectperson != null)
+            {
+                var selectpersonDto = new SelectPersonDtos()
+                {
+                    Id = selectperson.Id,
+                    FirstName = selectperson.FirstName,
+                    LastName = selectperson.LastName
+                };
+                return selectpersonDto;
+            }
+           
+        }
 
-                 await _personRepository.Delete(DeletedPerson);
+        public async Task Insert(CreatePersonDtos createpersondto)
+        {
+            var createperson = new Person()
+            {
+                Id = new Guid(),
+                FirstName = createpersondto.FirstName,
+                LastName = createpersondto.LastName,
+            };
+
+            await _personRepository.Insert(createperson);
+            
+        }
+
+        public async Task Update(UpdatePersonDtos updatePersondto)
+        {
+            var updatePerson = await _personRepository.SelectById(updatePersondto.Id);
+            if (updatePerson != null)
+            {
+                updatePerson.FirstName = updatePersondto.FirstName;
+                updatePerson.LastName = updatePersondto.LastName;
+                 await _personRepository.Update(updatePerson);
                 
             }
         }
 
-        public async Task<Person> InsertAsync(CreatePersonDtos createPersonDtos)
+        public async Task Delete(Guid id)
         {
-            if (createPersonDtos is not null)
-            { 
-            var createPerson = new Person()
-            {
-                Id = new Guid(),
-                FirstName = createPersonDtos.FirstName,
-                LastName = createPersonDtos.LastName,
-            };
+            await _personRepository.Delete(id);
+        }
 
-                //return
-                var Result = await _personRepository.Insert(createPerson);
-                return Result;
+        public async Task Delete(DeletePersonDtos deletePersondto)
+        {
+            var DeletedPerson = await _personRepository.SelectById(deletePersondto.Id);
+            if (DeletedPerson != null)
+            {
+
+                await _personRepository.Delete(DeletedPerson);
+
             }
         }
 
-        public async Task SaveAsync()
+        public async Task Save()
         {
             await _personRepository.Save();
         }
-
-        public async Task<SelectPersonDtos> SelectByIdAsync(Guid Id)
-        {
-            var selectperson = await _personRepository.SelectById;
-            if (selectperson != null)
-            {
-                var selectpersonDto = new SelectPersonDtos();
-                id = selectperson.Id,
-                FirstName = selectperson.FirstName,
-                LastName = selectperson.LastName
-                    }
-            return selectpersonDto;
-        }
-
-        public async Task<IEnumerable<SelectPersonDtos>> SelectAll()
-        {
-            List<SelectPersonDtos> persDto = new List<SelectPersonDtos>();
-            var personDto = await _personRepository.SelectAll();
-            foreach (var person in personDto)
-            {
-                var personDto = new SelectPersonDtos();
-                id = person.Id,
-                FirstName = person.FirstName,
-                LastName = person.LastName
-            };
-            persDto.Add(personDto);
-        }
-
-
-
-        public async Task UpdateAsync(UpdatePersonDtos updatePersonDtos)
-        {
-            var updatePerson = await _personRepository.SelectById(updatePersonDtos.Id);
-            if (updatePerson != null)
-            {
-                updatePerson.FirstName = updatePerson.FirstName;
-                updatePerson.LastName = updatePerson.LastName;
-                var result = await _personRepository.Update(updatePerson);
-                return result;
-            }
-
-        }
     }
+
+       
+        
 }
 
 
